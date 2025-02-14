@@ -11,7 +11,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { 
-    successRedirect: 'http://localhost:5173/dashboard',
+    successRedirect: 'http://localhost:5173/formulario',
     failureRedirect: '/'
   })
 );
