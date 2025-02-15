@@ -59,7 +59,7 @@ const Login = () => {
       >
         <Box 
           component="img"
-          src="../../public/images/header-univalle1.png" // Cambia esto con la ruta correcta de la imagen
+          src="../../public/images/header-univalle1.png"
           alt="Equivalencias Univalle"
           sx={{ width: '120%', maxWidth: '600px', marginBottom: 3 }}
         />

@@ -3,6 +3,7 @@ const { agregarUsuario } = require('../services/googleSheets');
 const { google } = require('googleapis');
 
 
+
 const router = express.Router();
 
 router.post('/registrar', async (req, res) => {
@@ -46,7 +47,7 @@ router.get('/ultima', async (req, res) => {
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.SHEETS_ID,
-      range: 'A2:P2', // Asumiendo que la última solicitud siempre está en la primera fila de datos
+      range: 'A2:P2', 
     });
 
     if (!response.data.values || response.data.values.length === 0) {

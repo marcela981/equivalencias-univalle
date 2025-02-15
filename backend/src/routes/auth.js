@@ -3,10 +3,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
-// Iniciar autenticación con Google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Callback después de autenticación
 
 router.get(
   '/google/callback',
@@ -16,7 +14,6 @@ router.get(
   })
 );
 
-// Verificar sesión del usuario
 router.get('/me', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
@@ -25,7 +22,6 @@ router.get('/me', (req, res) => {
   }
 });
 
-// Cerrar sesión
 router.get('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('http://localhost:5173');

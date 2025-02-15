@@ -45,7 +45,6 @@ const Formulario = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // Validaciones por tipo de campo
     if (['cedula', 'codigo', 'codigoProgramaAnterior', 'codigoProgramaActual'].includes(name)) {
       if (!/^\d*$/.test(value)) return; // Solo números
     }
@@ -75,24 +74,24 @@ const Formulario = () => {
   };
 
   const handleFinalizar = async () => {
-    if (!isStepValid()) {
-      alert('Por favor, completa todos los campos antes de finalizar.');
-      return;
-    }
-
-    setLoading(true);
+    setLoading(true); 
     try {
+      localStorage.setItem('ultimaSolicitud', JSON.stringify(formData));
+  
       await axios.post('http://localhost:3001/solicitudes/registrar', formData);
-      localStorage.removeItem('equivalenciasForm');
+  
+      localStorage.removeItem('equivalenciasForm'); 
       alert('Solicitud enviada correctamente.');
+  
       navigate('/resumen');
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
       alert('Error al enviar la solicitud.');
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
+
 
   return (
     <Box 
@@ -118,11 +117,28 @@ const Formulario = () => {
           borderRadius: '10px',
         }}
       >
+        <img src="../../public/images/header-univalle1.png" alt="Logo" style={{ width: '330px', marginBottom: '-11%' }} />        
+
         <Typography variant="h4" gutterBottom align="center">
           EQUIVALENCIAS - FACULTAD DE SALUD
         </Typography>
 
-        <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3, width: '100%' }}>
+        <Stepper 
+        activeStep={activeStep} 
+        alternativeLabel 
+        sx={{ 
+          mb: 3, width: '100%',
+            '& .MuiStepIcon-root': {
+              color: 'gray',
+            },
+            '& .Mui-active .MuiStepIcon-root': {
+              color: '#ea0101 !important',
+            },
+            '& .MuiStepLabel-label': {
+              fontWeight: 'bold',
+            }
+          }}
+        >
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -145,11 +161,11 @@ const Formulario = () => {
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 3 }}>
-          {activeStep > 0 && <Button variant="contained" onClick={handleBack}>Atrás</Button>}
+          {activeStep > 0 && <Button variant="contained" onClick={handleBack} sx={{backgroundColor: '#d20000'}}>Atrás</Button>}
           {activeStep < steps.length - 1 ? (
-            <Button variant="contained" color="primary" onClick={handleNext}>Siguiente</Button>
+            <Button variant="contained" color="primary" onClick={handleNext} sx={{backgroundColor: '#d20000'}}>Siguiente</Button>
           ) : (
-            <Button variant="contained" color="success" onClick={handleFinalizar} disabled={loading}>
+            <Button variant="contained" color="success" onClick={handleFinalizar} disabled={loading} >
               {loading ? <CircularProgress size={24} color="inherit" /> : 'FINALIZAR Y ENVIAR'}
             </Button>
           )}
