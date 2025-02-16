@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 
-const credentials = require(path.resolve(__dirname, '../../sheets-service-account.json'));
+const credentials = require(path.resolve(__dirname, '../../sheets-service-account.json')) || JSON.parse(process.env.SHEETS_SERVICE_ACCOUNT_JSON);
 
 dotenv.config();
 
