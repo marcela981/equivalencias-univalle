@@ -1,42 +1,50 @@
-const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
-const path = require('path');
-const fs = require('fs');
-const { generatePDF } = require('../utils/generatePDF');
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+const path = require("path");
+const fs = require("fs");
+const { generatePDF } = require("../utils/generatePDF");
+const obtenerAccessToken = require("./obtenerAccessToken");
 
 dotenv.config();
 
-
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.GMAIL_USER,
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    },
-  });
-
 const enviarCorreoResumen = async (solicitud) => {
-    try {
-        if (!solicitud) {
-            throw new Error("No se proporcionó la solicitud.");
-        }
+  try {
+    if (!solicitud) {
+      throw new Error("No se proporcionó la solicitud.");
+    }
 
-        console.log("Solicitud recibida para enviar email:", solicitud);
+    console.log("Solicitud recibida para enviar email:", solicitud);
 
-        const { nombre, apellido, correo } = solicitud;
+    const { nombre, apellido, correo } = solicitud;
 
-        if (!nombre || !apellido || !correo) {
-            throw new Error("Faltan datos necesarios en la solicitud.");
-        }
+    if (!nombre || !apellido || !correo) {
+      throw new Error("Faltan datos necesarios en la solicitud.");
+    }
 
-        const pdfPath = path.join(__dirname, '..', 'temp', 'solicitud_equivalencia.pdf');
+    const pdfPath = path.join(__dirname, "..", "temp", "solicitud_equivalencia.pdf");
 
-        await generatePDF(solicitud, pdfPath);
-        console.log("PDF generado correctamente en:", pdfPath);
-        
-        const mensaje = `
+    await generatePDF(solicitud, pdfPath);
+    console.log("PDF generado correctamente en:", pdfPath);
+
+    // Obtener el token de acceso
+    const accessToken = await obtenerAccessToken();
+    if (!accessToken) {
+      throw new Error("No se pudo obtener el access token.");
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.GMAIL_USER,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken, 
+      },
+    });
+
+    const mensaje = `
 Hola ${nombre} ${apellido},
 
 Aquí tienes el resumen de tu solicitud de equivalencia.
@@ -68,33 +76,33 @@ Si tienes alguna pregunta, no dudes en contactarnos.
 
 Saludos,
 Universidad del Valle
-        `;
+`;
 
-        const mailOptions = {
-            from: `"Sistema de Equivalencias" <${process.env.GMAIL_USER}>`,
-            to: correo,
-            subject: "Resumen de tu solicitud de equivalencia",
-            text: mensaje, 
-            attachments: [
-                {
-                    filename: "Resumen_Equivalencia.pdf",
-                    path: pdfPath,
-                    contentType: "application/pdf",
-                },
-            ],
-        };
+    const mailOptions = {
+      from: `"Sistema de Equivalencias" <${process.env.GMAIL_USER}>`,
+      to: correo,
+      subject: "Resumen de tu solicitud de equivalencia",
+      text: mensaje,
+      attachments: [
+        {
+          filename: "Resumen_Equivalencia.pdf",
+          path: pdfPath,
+          contentType: "application/pdf",
+        },
+      ],
+    };
 
-        const result = await transporter.sendMail(mailOptions);
-        console.log("Correo enviado correctamente:", result.response);
+    const result = await transporter.sendMail(mailOptions);
+    console.log("Correo enviado correctamente:", result.response);
 
-        fs.unlinkSync(pdfPath);
-        console.log("PDF eliminado después del envío.");
+    fs.unlinkSync(pdfPath);
+    console.log("PDF eliminado después del envío.");
 
-        return { success: true, message: "Correo enviado correctamente." };
-    } catch (error) {
-        console.error("Error al enviar el correo:", error);
-        throw new Error("Error al enviar el correo.");
-    }
+    return { success: true, message: "Correo enviado correctamente." };
+  } catch (error) {
+    console.error("Error al enviar el correo:", error);
+    throw new Error("Error al enviar el correo.");
+  }
 };
 
 module.exports = { enviarCorreoResumen };

@@ -6,8 +6,8 @@ dotenv.config();
 const obtenerAccessToken = async () => {
   try {
     const oauth2Client = new google.auth.OAuth2(
-      process.env.GMAIL_CLIENT_ID,
-      process.env.GMAIL_CLIENT_SECRET,
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
       "https://developers.google.com/oauthplayground"
     );
 
@@ -16,6 +16,8 @@ const obtenerAccessToken = async () => {
     });
 
     const { token } = await oauth2Client.getAccessToken();
+    console.log("Nuevo access token generado:", token);
+
     return token;
   } catch (error) {
     console.error("Error al obtener el access token:", error);
@@ -24,4 +26,3 @@ const obtenerAccessToken = async () => {
 };
 
 module.exports = obtenerAccessToken;
-

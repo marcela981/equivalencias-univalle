@@ -22,6 +22,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+console.log(process.env.GMAIL_USER);
 console.log('GMAIL_REFRESH_TOKEN:', process.env.GMAIL_REFRESH_TOKEN);
 
 app.use('/auth', authRoutes);
