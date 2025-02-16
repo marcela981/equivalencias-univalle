@@ -9,8 +9,8 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { 
-    successRedirect: process.env.FRONTEND_URL || 'http://localhost:5173/formulario',
-    failureRedirect: '/'
+    successRedirect: process.env.FRONTEND_URL + '/formulario',
+    failureRedirect: process.env.FRONTEND_URL,
   })
 );
 

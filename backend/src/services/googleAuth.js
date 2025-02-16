@@ -9,9 +9,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.NODE_ENV === 'production' 
-        ? 'https://equivalencias-univalle.vercel.app/api/auth/google/callback' 
-        : 'http://localhost:3001/api/auth/google/callback',
+      callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3001/api/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile.emails[0].value.endsWith('@correounivalle.edu.co')) {
