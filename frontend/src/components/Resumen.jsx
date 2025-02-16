@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Typography, Divider, Box, Paper, Button } from '@mui/material';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const Resumen = () => {
   const [solicitud, setSolicitud] = useState(null);
@@ -67,7 +68,7 @@ const Resumen = () => {
     if (!solicitud) return;
 
     try {
-      await axios.post('http://localhost:3001/enviar-correo', { solicitud }, { withCredentials: true });
+      await axios.post(`${API_URL}/mail/enviar-correo`, { solicitud }, { withCredentials: true });
       alert("El resumen se ha enviado correctamente al correo.");
     } catch (error) {
       console.error("Error al enviar el correo:", error);

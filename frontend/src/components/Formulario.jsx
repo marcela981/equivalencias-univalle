@@ -2,6 +2,7 @@ import { useState} from 'react';
 import { Container, TextField, Button, Typography, Stepper, Step, StepLabel, Box, CircularProgress  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const steps = ['Información Personal', 'Programa Anterior', 'Plan Actual', 'Solicitud de Equivalencia'];
 
@@ -78,7 +79,7 @@ const Formulario = () => {
     try {
       localStorage.setItem('ultimaSolicitud', JSON.stringify(formData));
   
-      await axios.post('http://localhost:3001/solicitudes/registrar', formData);
+      await axios.post(`${API_URL}/solicitudes/registrar`, formData);
   
       localStorage.removeItem('equivalenciasForm'); 
       alert('Solicitud enviada correctamente.');

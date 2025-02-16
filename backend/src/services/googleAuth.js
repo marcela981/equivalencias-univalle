@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/auth/google/callback',
+      callbackURL: 'http://localhost:3001/api/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile.emails[0].value.endsWith('@correounivalle.edu.co')) {
@@ -29,3 +29,5 @@ passport.deserializeUser((user, done) => {
 });
 
 console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
+
+module.exports = passport;

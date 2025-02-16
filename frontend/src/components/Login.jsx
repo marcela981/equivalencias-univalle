@@ -3,23 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Container, Typography, Box } from '@mui/material';
 import Cookies from 'js-cookie';
+import { API_URL } from '../config';
 
 const Login = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/auth/me', { withCredentials: true })
+    axios.get(`${API_URL}/auth/me`, { withCredentials: true })
       .then(response => setUser(response.data.user))
       .catch(error => console.error('Error al verificar sesión:', error));
   }, []);
 
   const handleLogin = () => {
-    window.location.href = 'http://localhost:3001/auth/google';
+    window.location.href =  `${API_URL}/auth/google`;
   };
 
   const handleLogout = () => {
-    axios.get('http://localhost:3001/auth/logout', { withCredentials: true })
+    axios.get(`${API_URL}/auth/logout`, { withCredentials: true })
       .then(() => {
         setUser(null);
         Cookies.remove('token');
