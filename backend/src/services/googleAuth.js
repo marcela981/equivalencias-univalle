@@ -27,3 +27,5 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
+
+console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);

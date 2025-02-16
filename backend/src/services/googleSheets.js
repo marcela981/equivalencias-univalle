@@ -2,6 +2,9 @@ const { google } = require('googleapis');
 const dotenv = require('dotenv');
 const path = require('path');
 
+
+const credentials = require(path.resolve(__dirname, '../../sheets-service-account.json'));
+
 dotenv.config();
 
 const keyFilePath = path.join(process.cwd(), process.env.SERVICE_ACCOUNT_JSON);

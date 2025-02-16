@@ -87,7 +87,7 @@ const Resumen = () => {
     <Container maxWidth="md" sx={{ mt: 5 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 2, backgroundColor: '#ffffff' }}>
 
-        <img src="../../public/images/header-univalle1.png" alt="Logo" style={{ width: '240px', marginBottom: '-5%' , marginLeft:'35%'}} />
+        <img src="/frontend/public/images/header-univalle1.png" alt="Logo" style={{ width: '240px', marginBottom: '-5%' , marginLeft:'35%'}} />
 
         <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 'bold' }}>
           Resumen de Solicitud de Equivalencia

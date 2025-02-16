@@ -117,7 +117,7 @@ const Formulario = () => {
           borderRadius: '10px',
         }}
       >
-        <img src="../../public/images/header-univalle1.png" alt="Logo" style={{ width: '330px', marginBottom: '-11%' }} />        
+        <img src="/frontend/public/images/header-univalle1.png" alt="Logo" style={{ width: '330px', marginBottom: '-11%' }} />        
 
         <Typography variant="h4" gutterBottom align="center">
           EQUIVALENCIAS - FACULTAD DE SALUD

@@ -10,10 +10,12 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASSWORD,
+      type: "OAuth2",
+      user: process.env.GMAIL_USER,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
-});
+  });
 
 const enviarCorreoResumen = async (solicitud) => {
     try {

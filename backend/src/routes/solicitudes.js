@@ -39,7 +39,7 @@ router.post('/registrar', async (req, res) => {
 router.get('/ultima', async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: process.env.SERVICE_ACCOUNT_JSON,
+      keyFile: process.env.SHEETS_SERVICE_ACCOUNT_JSON,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
