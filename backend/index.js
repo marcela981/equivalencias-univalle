@@ -32,9 +32,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/solicitudes', solicitudesRoutes);
 app.use('/api/mail', mailRoutes);
 
-/*const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});*/
+});
 
 module.exports = app;

@@ -60,7 +60,7 @@ const Login = () => {
       >
         <Box 
           component="img"
-          src="/frontend/public/images/header-univalle1.png"
+          src="/images/header-univalle1.png"
           alt="Equivalencias Univalle"
           sx={{ width: '120%', maxWidth: '600px', marginBottom: 3 }}
         />
