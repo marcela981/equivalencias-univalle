@@ -28,9 +28,6 @@ const enviarCorreoResumen = async (solicitud) => {
 
     // Obtener el token de acceso
     const accessToken = await obtenerAccessToken();
-    if (!accessToken) {
-      throw new Error("No se pudo obtener el access token.");
-    }
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -101,7 +98,7 @@ Universidad del Valle
     return { success: true, message: "Correo enviado correctamente." };
   } catch (error) {
     console.error("Error al enviar el correo:", error);
-    throw new Error("Error al enviar el correo.");
+    throw new Error("Error al enviar el correo."+ error.message);
   }
 };
 
