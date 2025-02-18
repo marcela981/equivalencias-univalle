@@ -26,16 +26,17 @@ const enviarCorreoResumen = async (solicitud) => {
     await generatePDF(solicitud, pdfPath);
     console.log("PDF generado correctamente en:", pdfPath);
 
-    // Obtener el token de acceso
+
     const accessToken = await obtenerAccessToken();
+    console.log("AccessToken obtenido:", accessToken);
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USER,
-        clientId: process.env.GMAIL_CLIENT_ID,
-        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         refreshToken: process.env.GMAIL_REFRESH_TOKEN,
         accessToken: accessToken, 
       },
